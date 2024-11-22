@@ -132,6 +132,8 @@ const gameService = {
   },
 
   markBall: async (gameId, userId, ballNumber) => {
+    console.log("marcando bola", ballNumber, userId, gameId);
+
     const game = await Game.findById(gameId);
     if (!game) throw new Error("Juego no encontrado");
     if (game.gameStatus !== "en curso")
@@ -168,7 +170,7 @@ const gameService = {
     player.markedBalls.push(ballNumber);
 
     await game.save();
-    return game;
+    return ballNumber;
   },
 
   checkWinCondition: async (gameId, userId) => {

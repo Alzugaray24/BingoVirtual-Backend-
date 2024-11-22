@@ -77,8 +77,9 @@ export const initializeSocket = (io) => {
 
     socket.on("markBall", async (gameId, userId, ballNumber) => {
       try {
-        const game = await gameService.markBall(gameId, userId, ballNumber);
-        io.to(gameId).emit("ballMarked", game);
+        console.log("marcando bola", ballNumber, userId, gameId);
+        const ball = await gameService.markBall(gameId, userId, ballNumber);
+        io.to(gameId).emit("ballMarked", ball);
       } catch (err) {
         emitError(err.message);
       }
