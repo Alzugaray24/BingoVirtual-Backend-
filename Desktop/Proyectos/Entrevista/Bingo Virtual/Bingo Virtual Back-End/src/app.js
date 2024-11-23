@@ -8,6 +8,9 @@ app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 app.use("/auth", authRouter);
+app.use("/", (req, res) => {
+  res.send("Servidor funcionando");
+});
 
 app.get("/", (req, res) => {
   res.send("Servidor funcionando");

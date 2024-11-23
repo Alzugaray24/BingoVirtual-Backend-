@@ -3,6 +3,9 @@ import { Server } from "socket.io";
 import MongoSingleton from "./db/database.js";
 import app from "./app.js";
 import { initializeSocket } from "./sockets/socketEvents.js";
+import config from "./config/config.js";
+
+console.log("Iniciando servidor...", config.port);
 
 MongoSingleton.getInstance();
 

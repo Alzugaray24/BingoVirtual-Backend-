@@ -2,11 +2,8 @@ import gameService from "../services/gameService.js";
 
 export const initializeSocket = (io) => {
   io.on("connection", (socket) => {
-    console.log(`Cliente conectado: ${socket.id}`);
-
     const emitError = (message) => {
-      console.error(message);
-      socket.emit("error", message);
+      socket.emit("error", { message });
     };
 
     socket.on("viewGames", async () => {
@@ -14,7 +11,7 @@ export const initializeSocket = (io) => {
         const games = await gameService.viewGames();
         socket.emit("gamesList", games);
       } catch (err) {
-        emitError("No se pudieron obtener los juegos");
+        emitError(err.message);
       }
     });
 
@@ -77,7 +74,6 @@ export const initializeSocket = (io) => {
 
     socket.on("markBall", async (gameId, userId, ballNumber) => {
       try {
-        console.log("marcando bola", ballNumber, userId, gameId);
         const ball = await gameService.markBall(gameId, userId, ballNumber);
         io.to(gameId).emit("ballMarked", ball);
       } catch (err) {
@@ -108,7 +104,7 @@ export const initializeSocket = (io) => {
     });
 
     socket.on("disconnect", () => {
-      console.log(`Cliente desconectado: ${socket.id}`);
+      // Cliente desconectado
     });
   });
 };

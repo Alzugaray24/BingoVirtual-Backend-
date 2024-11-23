@@ -87,23 +87,18 @@ const gameService = {
     return await game.save();
   },
 
-  // Función para eliminar un juego por su ID
   deleteGame: async (gameId) => {
     try {
-      // Verificar si el juego existe en la base de datos
       const game = await Game.findById(gameId);
 
       if (!game) {
-        throw new Error("Juego no encontrado"); // Si no se encuentra, lanzar un error
+        throw new Error("Juego no encontrado");
       }
 
-      // Eliminar el juego
-      await Game.deleteOne({ _id: gameId }); // Método para eliminar el juego de la base de datos
+      await Game.deleteOne({ _id: gameId });
 
-      // Devolver el ID del juego eliminado o la información del juego si lo necesitas
       return { _id: gameId };
     } catch (err) {
-      // En caso de error, lanzar un mensaje apropiado
       throw new Error(`Error al eliminar el juego: ${err.message}`);
     }
   },
@@ -132,8 +127,6 @@ const gameService = {
   },
 
   markBall: async (gameId, userId, ballNumber) => {
-    console.log("marcando bola", ballNumber, userId, gameId);
-
     const game = await Game.findById(gameId);
     if (!game) throw new Error("Juego no encontrado");
     if (game.gameStatus !== "en curso")
